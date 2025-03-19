@@ -1,0 +1,35 @@
+---
+name: "Sync Repository Daily"
+
+on:
+  schedule:
+    - cron: "15 3 * * *"  # Runs daily at 03:15 UTC
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout private repo
+        uses: actions/checkout@v4
+        with:
+          repository: sapna-kokane/sof-test-repo
+          token: ${{secrets.PERSONAL_ACCESS_TOKEN}}
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Clone and Mirror Public Repo
+        shell: bash
+        run: |
+          SRC_REPO="https://github.com/thesofproject/sof-test.git"
+          DEST_REPO="https://${{secrets.PERSONAL_ACCESS}}@github.com/sapna-kokane/sof-test-repo.git"
+
+          git mirror "$SRC_REPO" sof-test
+          cd sof-test
+          git remote set-url --push origin "$DEST_REPO"
+          git push --mirror
+        
+
+      - name: Verify Sync Status
+        shell: bash
+        run: echo "Sync completed successfully!"
