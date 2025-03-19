@@ -10,11 +10,11 @@ jobs:
   sync:
     runs-on: windows-latest
     steps:
-      - name: Checkout private repo
+      - name: Checkout public repo
         uses: actions/checkout@v4
         with:
-          repository: sapna-kokane/sof-test-repo
-          token: ${{secrets.PERSONAL_ACCESS_TOKEN}}
+          repository: sapna-kokane/sof_test_repo_public
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           fetch-depth: 0
           persist-credentials: true
 
@@ -22,7 +22,7 @@ jobs:
         shell: bash
         run: |
           SRC_REPO="https://github.com/thesofproject/sof-test.git"
-          DEST_REPO="https://${{secrets.PERSONAL_ACCESS}}@github.com/sapna-kokane/sof-test-repo.git"
+          DEST_REPO="https://${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/sapna-kokane/sof_test_repo_public.git"
 
           git mirror "$SRC_REPO" sof-test
           cd sof-test
