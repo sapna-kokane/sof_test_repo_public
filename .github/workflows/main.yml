@@ -21,8 +21,7 @@ jobs:
       - name: Clone Public Repo
         shell: bash
         run: |
-          git clone --bare https://github.com/thesofproject/sof-test.git sof-test
-          cd sof-test
+          git clone --bare https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git
           git push --mirror https://github.com/sapna-kokane/sof_test_repo_public.git"
         
 
