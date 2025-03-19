@@ -21,12 +21,9 @@ jobs:
       - name: Clone Public Repo
         shell: bash
         run: |
-          SRC_REPO="https://github.com/thesofproject/sof-test.git"
-          DEST_REPO="https://${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/sapna-kokane/sof_test_repo_public.git"
-
-          git clone --bare "$SRC_REPO" sof-test
+          git clone --bare https://github.com/thesofproject/sof-test.git sof-test
           cd sof-test
-          git push --mirror origin "$DEST_REPO"
+          git push --mirror https://github.com/sapna-kokane/sof_test_repo_public.git"
         
 
       - name: Verify Sync Status
