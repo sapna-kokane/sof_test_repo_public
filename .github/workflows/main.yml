@@ -20,7 +20,7 @@ jobs:
 
       - name: Clone Public Repo
         run: |
-          git clone --bare https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git
+          git clone https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git
           git push https://github.com/sapna-kokane/sof_test_repo_public.git
         
 
