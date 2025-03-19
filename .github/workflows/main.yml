@@ -18,16 +18,16 @@ jobs:
           fetch-depth: 0
           persist-credentials: true
 
-      - name: Clone and Mirror Public Repo
+      - name: Clone Public Repo
         shell: bash
         run: |
           SRC_REPO="https://github.com/thesofproject/sof-test.git"
           DEST_REPO="https://${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/sapna-kokane/sof_test_repo_public.git"
 
-          git clone --mirror "$SRC_REPO" sof-test
+          git clone "$SRC_REPO" sof-test
           cd sof-test
           git remote set-url --push origin "$DEST_REPO"
-          git push --mirror
+          git push 
         
 
       - name: Verify Sync Status
