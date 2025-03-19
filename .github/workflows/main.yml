@@ -20,8 +20,8 @@ jobs:
 
       - name: Clone Public Repo
         run: |
-          git clone --bare https://github.com/thesofproject/sof-test.git cd sof-test
-          git push --mirror https://github.com/sapna-kokane/sof_test_repo_public.git
+          git clone --bare https://github.com/thesofproject/sof-test.git
+          git push https://github.com/sapna-kokane/sof_test_repo_public.git
         
 
       - name: Verify Sync Status
