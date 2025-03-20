@@ -22,12 +22,13 @@ jobs:
         run: |
           git clone https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git
           cd sound
-          git log --oneline
       - name: Push to private repository
         run: |
           git remote remove origin
+      - name: git remote add orgin
+        run: |
           git remote add origin https://github.com/sapna-kokane/sof_test_repo_public.git
           git branch -M main
+      - name: git Push
+        run: |
           git push -u origin main --force
-      - name: Verify Sync Status
-        run: echo "Sync completed successfully!"
