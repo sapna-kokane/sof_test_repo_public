@@ -26,9 +26,6 @@ jobs:
       - name: Clone Public Repo
         run: |
           git clone https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git
-      - name: Copy files to private repo
-        run: |
-         cp -r sound/*.
       - name: Push to private repository
         run: |
           git add .
