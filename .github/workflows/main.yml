@@ -30,4 +30,4 @@ jobs:
         run: |
           git add .
           git commit -m "Daily sync from public repo"
-          git push origin main
+          git push https://github.com/sapna-kokane/sof_test_repo_public.git
