@@ -38,7 +38,7 @@ jobs:
       - name: copy files to private repository
         shell: bash
         run: |
-            cp -r sound/*.
+            cp -r sound/
             rm -rf sound
 
       - name: Push to private repository
