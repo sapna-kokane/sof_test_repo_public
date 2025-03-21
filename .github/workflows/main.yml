@@ -14,7 +14,6 @@ jobs:
       - name: Checkout public repo
         uses: actions/checkout@v4
         with:
-          submodule: recursive
           repository: sapna-kokane/sof_test_repo_public
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           fetch-depth: 0
