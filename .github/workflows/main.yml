@@ -28,6 +28,7 @@ jobs:
           git clone https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git
       - name: Push to private repository
         run: |
-          git add .
+          rm -rf sound/.git
+          git add sound
           git commit -m "Daily sync from public repo"
-          git push https://github.com/sapna-kokane/sof_test_repo_public.git
+          git push origin main
