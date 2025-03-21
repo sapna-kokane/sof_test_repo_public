@@ -14,19 +14,36 @@ jobs:
       - name: Checkout public repo
         uses: actions/checkout@v4
         with:
+          submodule: recursive
           repository: sapna-kokane/sof_test_repo_public
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           fetch-depth: 0
           persist-credentials: true
 
       - name: set up git
+        shell: bash
         run: |
           git config --global user.name "sapna"
           git config --global user.email "sapna.kokane@amd.com"
+
       - name: Clone Public Repo
+        shell: bash
         run: |
           git clone https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git
+
+      - name: remove .git folder inside subdirectories
+        shell: bash
+        run: |
+            rm -rf https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git
+
+      - name: copy files to private repository
+        shell: bash
+        run: |
+            cp -r sound/*
+            rm -rf sound
+
       - name: Push to private repository
+        shell: bash
         run: |
           rm -rf sound/.git
           git add sound
