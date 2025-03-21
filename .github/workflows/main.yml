@@ -10,6 +10,10 @@ on:
 jobs:
   sync:
     runs-on: windows-latest
+      submodule:
+      description: 'Clone with submodules'
+      required: true
+      default: sound
     steps:
       - name: Checkout public repo
         uses: actions/checkout@v4
@@ -18,7 +22,7 @@ jobs:
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           fetch-depth: 0
           persist-credentials: true
-          
+
       - name: set up git
         run: |
           git config --global user.name "sapna"
