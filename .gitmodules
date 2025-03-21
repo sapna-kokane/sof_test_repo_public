@@ -1,0 +1,3 @@
+        [submodule "sound"]
+            path = sound
+            url = https://github.com/sapna-kokane/sof_test_repo_public.git
