@@ -38,8 +38,8 @@ jobs:
       - name: copy files to private repository
         shell: bash
         run: |
-            cp -r temp-public-repo/*.
-            rm -rf temp-public-repo
+            cp -r sound/temp-public-repo/*.
+            rm -rf sound/temp-public-repo
 
       - name: Push to private repository
         shell: bash
