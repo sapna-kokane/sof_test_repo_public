@@ -28,23 +28,22 @@ jobs:
       - name: Clone Public Repo
         shell: bash
         run: |
-          git clone https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git
+          git clone https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git temp-public-repo
 
       - name: remove .git folder inside subdirectories
         shell: bash
         run: |
-            rm -rf sound/.git || true
+            rm -rf temp-public-repo/sound/.git || true
 
       - name: copy files to private repository
         shell: bash
         run: |
-            cp -r sound/
-            rm -rf sound
+            cp -r temp-public-repo/*.
+            rm -rf temp-public-repo
 
       - name: Push to private repository
         shell: bash
         run: |
-          rm -rf sound/.git
-          git add sound
+          git add .
           git commit -m "Daily sync from public repo"
           git push origin main
