@@ -10,10 +10,6 @@ on:
 jobs:
   sync:
     runs-on: windows-latest
-      submodule:
-      description: 'Clone with submodules'
-      required: true
-      default: sound
     steps:
       - name: Checkout public repo
         uses: actions/checkout@v4
