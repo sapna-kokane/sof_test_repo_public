@@ -33,12 +33,12 @@ jobs:
       - name: remove .git folder inside subdirectories
         shell: bash
         run: |
-            rm -rf https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git
+            rm -rf sound/.git || true
 
       - name: copy files to private repository
         shell: bash
         run: |
-            cp -r sound
+            cp -r sound/*.
             rm -rf sound
 
       - name: Push to private repository
