@@ -28,18 +28,12 @@ jobs:
       - name: Clone Public Repo
         shell: bash
         run: |
-          git clone https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git temp-public-repo
+          git clone https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git
 
       - name: remove .git folder inside subdirectories
         shell: bash
         run: |
             rm -rf temp-public-repo/sound/.git || true
-
-      - name: copy files to private repository
-        shell: bash
-        run: |
-            cp -r sound/temp-public-repo/*.
-            rm -rf sound/temp-public-repo
 
       - name: Push to private repository
         shell: bash
