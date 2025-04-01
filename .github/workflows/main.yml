@@ -1,43 +1,53 @@
 ---
-name: "Sync Repository Daily"
+name: Sync Public and Private Repositories
 
 on:
-  schedule:
-    - cron: "15 3 * * *"  # Runs daily at 03:15 UTC
-    
+  # schedule:
+  #   - cron: "0 0 * * *"
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 jobs:
-  sync:
-    runs-on: windows-latest
+  sync_repo:
+    runs-on: self-hosted
     steps:
-      - name: Checkout public repo
-        uses: actions/checkout@v4
+      - name: Install Git LFS
+        run: |
+          if ! git lfs; then
+            curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
+            sudo apt-get install git-lfs
+            git lfs install
+          fi
+          
+      - name: Checkout Private Repository
+        uses: actions/checkout@v2
         with:
-          repository: sapna-kokane/sof_test_repo_public
-          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          token: ${{ secrets.ACCESS_TOKEN }}
+          repository: Linux-Audio/sound
+          path: private-repo
           fetch-depth: 0
-          persist-credentials: true
+          lfs: true
 
-      - name: set up git
-        shell: bash
-        run: |
-          git config --global user.name "sapna"
-          git config --global user.email "sapna.kokane@amd.com"
+      - name: Remove existing public-repo directory (if exists)
+        run: rm -rf public-repo
 
-      - name: Clone Public Repo
-        shell: bash
-        run: |
-          git clone https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git
+      - name: Clone Public Repository
+        run: git clone https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git public-repo
 
-      - name: remove .git folder inside subdirectories
-        shell: bash
+      - name: Configure Git
         run: |
-            rm -rf temp-public-repo/sound/.git || true
-
-      - name: Push to private repository
-        shell: bash
+          git config user.name "Syed Saba Kareem"
+          git config user.email "syed.sabakareem@amd.com"
+      - name: Commit changes with LFS
         run: |
-          git add .
-          git commit -m "Daily sync from public repo"
+          rsync -av --exclude='.git' public-repo/ private-repo/
+          cd private-repo
+          git lfs track "*.h" "*.d"
+          git add --all
+          git commit -m "Sync with public repository"
+      - name: Push changes
+        run: |
+          cd private-repo
           git push origin main
