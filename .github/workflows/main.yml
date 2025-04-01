@@ -2,8 +2,8 @@
 name: "Sync Repository Daily"
 
 on:
-  schedule:
-    - cron: "15 3 * * *"  # Runs daily at 03:15 UTC
+ # schedule:
+ #   - cron: "15 3 * * *"  # Runs daily at 03:15 UTC
     
   workflow_dispatch:
 
