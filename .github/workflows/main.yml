@@ -39,7 +39,7 @@ jobs:
         shell: bash
         run: |
           git add .
-          git commit -a "Daily sync from public repo"
+          git commit -a
           git push origin main
       - name: Push changes
         run: |
