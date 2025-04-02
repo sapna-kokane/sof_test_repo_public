@@ -10,7 +10,7 @@ on:
 
 jobs:
   sync_repo:
-    runs-on: self-hosted
+    runs-on: windows-latest
     steps:
       - name: Checkout Private Repository
         uses: actions/checkout@v2
