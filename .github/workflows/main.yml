@@ -20,8 +20,8 @@ jobs:
           path: private-repo
           fetch-depth: 0
 
-      - name: Remove existing public-repo directory (if exists)
-        run: rm -rf public-repo
+   #   - name: Remove existing public-repo directory (if exists)
+      #  run: rm -rf public-repo
 
       - name: Clone Public Repository
         run: git clone https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git public-repo
