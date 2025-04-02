@@ -43,5 +43,4 @@ jobs:
           git push origin main
       - name: Push changes
         run: |
-          cd private-repo
           git push origin main
