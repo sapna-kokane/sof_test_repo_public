@@ -10,7 +10,7 @@ on:
 
 jobs:
   sync_repo:
-    runs-on: windows-latest
+    runs-on: self-hosted
     steps:
       - name: Checkout Private Repository
         uses: actions/checkout@v2
@@ -20,16 +20,16 @@ jobs:
           path: private-repo
           fetch-depth: 0
 
-   #   - name: Remove existing public-repo directory (if exists)
-      #  run: rm -rf public-repo
+      - name: Remove existing public-repo directory (if exists)
+        run: rm -rf public-repo
 
       - name: Clone Public Repository
         run: git clone https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git public-repo
 
-      #- name: Configure Git
-       # run: |
-        #  git config user.name "sapna"
-         # git config user.email "sapna.kokane@amd.com"
+      - name: Configure Git
+        run: |
+          git config user.name "sapna"
+          git config user.email "sapna.kokane@amd.com"
 
       - name: Sync Public to Private Repository
         run: |
