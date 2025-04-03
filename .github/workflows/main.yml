@@ -26,10 +26,11 @@ jobs:
       - name: Clone Public Repository
         run: git clone https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git public-repo
 
-      - name: Configure Git
-        run: |
-          git config user.name "sapna"
-          git config user.email "sapna.kokane@amd.com"
+      #- name: Configure Git
+       # run: |
+        #  git config user.name "sapna"
+         # git config user.email "sapna.kokane@amd.com"
+
       - name: Sync Public to Private Repository
         run: |
           rsync -av --exclude='.git' public-repo/ private-repo/
