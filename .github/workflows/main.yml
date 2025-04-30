@@ -1,8 +1,8 @@
 name: Sync Public and Private Repositories
 
 on:
-  schedule:
-    - cron: "0 0 * * *"
+#  schedule:
+#    - cron: "0 0 * * *"
   pull_request:
     branches:
       - main
