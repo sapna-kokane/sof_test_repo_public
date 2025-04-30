@@ -1,8 +1,8 @@
 name: Sync Public and Private Repositories
 
 on:
-  # schedule:
-  #   - cron: "0 0 * * *"
+  schedule:
+    - cron: "0 0 * * *"
   pull_request:
     branches:
       - main
@@ -11,14 +11,17 @@ on:
 jobs:
   sync_repo:
     runs-on: self-hosted
+    env:
+      branch_name: main
     steps:
       - name: Checkout Private Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          repository: sapna-kokane/sof_test_repo_public
+          repository: sof_test_repo_public/sound
           path: private-repo
           fetch-depth: 0
+          ref: ${{ env.branch_name }}
 
       - name: Remove existing public-repo directory (if exists)
         run: rm -rf public-repo
@@ -28,14 +31,25 @@ jobs:
 
       - name: Configure Git
         run: |
-          git config user.name "sapna"
+          git config user.name "sapna kokane"
           git config user.email "sapna.kokane@amd.com"
 
       - name: Sync Public to Private Repository
         run: |
+          set -e
+          echo "Starting sync process..."
           rsync -av --exclude='.git' public-repo/ private-repo/
+          echo "Sync completed. Preparing to commit changes..."
           cd private-repo
           git add --all
-          git commit -m "Sync with public repository"
-          git lfs push origin main
-          git push origin main
+          if git diff-index --quiet HEAD; then
+            echo "No changes to commit. Exiting with success."
+            exit 0
+          else
+            git commit -m "Sync with public repository"
+            git lfs push origin ${{ env.branch_name }}
+            git push origin ${{ env.branch_name }}
+          fi
+
+      - name: Cleanup
+        run: rm -rf public-repo private-repo
