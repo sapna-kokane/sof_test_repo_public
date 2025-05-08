@@ -21,7 +21,7 @@ jobs:
         with:
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           repository: sapna-kokane/sof_test_repo_public
-          path: private-repo
+          path: public-repo
           fetch-depth: 0
           ref: ${{ env.branch_name }}
 
