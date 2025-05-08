@@ -38,7 +38,7 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE/private-repo
           git config user.name "sapna kokane"
-          git config user.email "sapna.kokanem@amd.com"
+          git config user.email "sapna.kokane@amd.com"
       # Step 5: Sync Public to Private Repository (Exclude Dockerfile)
       - name: Sync Public to Private Repository
         run: |
