@@ -10,7 +10,7 @@ on:
 
 jobs:
   sync_repo:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     env:
       branch_name: main
 
@@ -21,7 +21,7 @@ jobs:
         with:
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           repository: sapna-kokane/sof_test_repo_public
-          path: public-repo
+          path: sound
           fetch-depth: 0
           ref: ${{ env.branch_name }}
 
@@ -36,9 +36,9 @@ jobs:
       # Step 4: Configure Git
       - name: Configure Git
         run: |
-          cd $GITHUB_WORKSPACE/private-repo
+          cd $GITHUB_WORKSPACE/sound
           git config user.name "sapna kokane"
-          git config user.email "sapna.kokanem@amd.com"
+          git config user.email "sapna.kokane@amd.com"
       # Step 5: Sync Public to Private Repository (Exclude Dockerfile)
       - name: Sync Public to Private Repository
         run: |
