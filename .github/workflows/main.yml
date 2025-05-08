@@ -1,11 +1,11 @@
 name: Sync Public and Private Repositories
 
 on:
-#  schedule:
-#    - cron: "0 0 * * *"
-  pull_request:
-    branches:
-      - main
+  #schedule:
+  #  - cron: "0 0 * * *" # Runs daily at midnight UTC
+ # pull_request:
+   # branches:
+     # - main
   workflow_dispatch:
 
 jobs:
@@ -13,33 +13,36 @@ jobs:
     runs-on: windows-latest
     env:
       branch_name: main
+
     steps:
+      # Step 1: Checkout Private Repository
       - name: Checkout Private Repository
         uses: actions/checkout@v3
         with:
-          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+          token: ${{ secrets.ACCESS_TOKEN }}
           repository: sapna-kokane/sof_test_repo_public
           path: private-repo
           fetch-depth: 0
           ref: ${{ env.branch_name }}
 
-      - name: Remove existing public-repo directory (if exists)
+      # Step 2: Remove existing public-repo directory (if exists)
+      - name: Remove existing public-repo directory
         run: rm -rf public-repo
 
+      # Step 3: Clone Public Repository
       - name: Clone Public Repository
         run: git clone https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git public-repo
 
+      # Step 4: Configure Git
       - name: Configure Git
         run: |
+          cd $GITHUB_WORKSPACE/private-repo
           git config user.name "sapna kokane"
-          git config user.email "sapna.kokane@amd.com"
-
+          git config user.email "sapna.kokanem@amd.com"
+      # Step 5: Sync Public to Private Repository (Exclude Dockerfile)
       - name: Sync Public to Private Repository
         run: |
-          set -e
-          echo "Starting sync process..."
-          rsync -av --exclude='.git' public-repo/ private-repo/
-          echo "Sync completed. Preparing to commit changes..."
+          rsync -av --exclude='.git' --exclude='Dockerfile' public-repo/ private-repo/
           cd private-repo
           git add --all
           if git diff-index --quiet HEAD; then
@@ -47,9 +50,5 @@ jobs:
             exit 0
           else
             git commit -m "Sync with public repository"
-            git lfs push origin ${{ env.branch_name }}
             git push origin ${{ env.branch_name }}
           fi
-
-      - name: Cleanup
-        run: rm -rf public-repo private-repo
