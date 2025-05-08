@@ -19,7 +19,7 @@ jobs:
       - name: Checkout Private Repository
         uses: actions/checkout@v3
         with:
-          token: ${{ secrets.ACCESS_TOKEN }}
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           repository: sapna-kokane/sof_test_repo_public
           path: private-repo
           fetch-depth: 0
